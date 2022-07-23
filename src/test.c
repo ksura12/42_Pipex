@@ -6,14 +6,13 @@
 /*   By: ksura <ksura@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/22 12:09:05 by ksura             #+#    #+#             */
-/*   Updated: 2022/07/22 12:52:24 by ksura            ###   ########.fr       */
+/*   Updated: 2022/07/22 13:55:11 by ksura            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../header/pipex.h"
 #include <unistd.h>
 #include <stdio.h>
-
 
 char 	*get_cmd_path(char *cmd, char **envp)
 {

@@ -1,20 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pipex.h                                            :+:      :+:    :+:   */
+/*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ksura <ksura@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/07/22 12:07:45 by ksura             #+#    #+#             */
-/*   Updated: 2022/07/23 14:06:24 by ksura            ###   ########.fr       */
+/*   Created: 2022/07/23 13:53:36 by ksura             #+#    #+#             */
+/*   Updated: 2022/07/23 14:11:09 by ksura            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PIPEX_H
-# define PIPEX_H
+#include "../header/pipex.h"
 
-# include "../libft/libft.h"
-# include <unistd.h>
-# include <stdio.h>
-
-#endif
+int	main(int argc, char **argv)
+{
+	(void)argv;
+	if (argc != 5)
+	{
+		perror ("Wrong amount of input arguments");
+		return (-1);
+	}
+	else
+		return (0);
+}
