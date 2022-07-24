@@ -6,7 +6,7 @@
 /*   By: ksura <ksura@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/22 12:07:45 by ksura             #+#    #+#             */
-/*   Updated: 2022/07/23 15:25:19 by ksura            ###   ########.fr       */
+/*   Updated: 2022/07/24 10:49:55 by ksura            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 # include "../libft/libft.h"
 # include <unistd.h>
 # include <stdio.h>
+# include <fcntl.h>
 
 char 	*get_cmd_path(char *cmd, char **envp);
 

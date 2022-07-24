@@ -6,7 +6,7 @@
 /*   By: ksura <ksura@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/22 12:09:05 by ksura             #+#    #+#             */
-/*   Updated: 2022/07/22 13:55:11 by ksura            ###   ########.fr       */
+/*   Updated: 2022/07/24 11:03:35 by ksura            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,23 +60,23 @@ char 	*get_cmd_path(char *cmd, char **envp)
 	return (0);
 }
 
-int main(int argc, char **argv, char **envp)
-{
-	char	*cmd_path;
-	char	*options[3] = {"ls", "-la", NULL};
-	char	*cmd = "ls";
+// int main(int argc, char **argv, char **envp)
+// {
+// 	char	*cmd_path;
+// 	char	*options[3] = {"ls", "-la", NULL};
+// 	char	*cmd = "ls";
 
-	(void)argc;
-	(void)argv;
-	cmd_path = get_cmd_path(cmd, envp);
+// 	(void)argc;
+// 	(void)argv;
+// 	cmd_path = get_cmd_path(cmd, envp);
 
-	if(!cmd_path)
-	{
-		perror(cmd_path);
-		return(-1);
-	}
-	execve(cmd_path, options, envp);
-	//free(cmd_path);
-	return (0);
+// 	if(!cmd_path)
+// 	{
+// 		perror(cmd_path);
+// 		return(-1);
+// 	}
+// 	execve(cmd_path, options, envp);
+// 	//free(cmd_path);
+// 	return (0);
 
-}
+// }
