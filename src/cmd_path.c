@@ -6,7 +6,7 @@
 /*   By: ksura <ksura@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/22 12:09:05 by ksura             #+#    #+#             */
-/*   Updated: 2022/07/24 17:59:26 by ksura            ###   ########.fr       */
+/*   Updated: 2022/07/24 18:17:45 by ksura            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,10 @@
 #include <unistd.h>
 #include <stdio.h>
 
-char	*get_paths(int i, char **envp)
+static char	*get_paths(int i, char **envp)
 {
 	char	*envp_path;
-	
+
 	while (envp[i])
 	{
 		envp_path = ft_strnstr(envp[i], "PATH=", 5);
@@ -30,7 +30,36 @@ char	*get_paths(int i, char **envp)
 		}
 		i++;
 	}
-	return(envp_path);
+	return (envp_path);
+}
+
+char	**slash_path(int i, char **paths)
+{
+	char	*tmp;
+
+	while (paths[i])
+	{
+		tmp = paths[i];
+		paths[i] = ft_strjoin(paths[i], "/");
+		free(tmp);
+		i++;
+	}
+	return (paths);
+}
+
+char	*wright_path(int i, char **paths, char *cmd)
+{
+	char	*cmd_path;
+
+	while (paths[i])
+	{
+		cmd_path = ft_strjoin(paths[i], cmd);
+		if (access(cmd_path, F_OK | X_OK) == 0)
+			return (cmd_path);
+		free (cmd_path);
+		i++;
+	}
+	return (NULL);
 }
 
 char	*get_cmd_path(char *cmd, char **envp)
@@ -39,7 +68,6 @@ char	*get_cmd_path(char *cmd, char **envp)
 	char	*envp_path;
 	char	*cmd_path;
 	char	**paths;
-	char	*tmp;
 
 	i = 0;
 	if (get_paths(i, envp) == 0)
@@ -49,22 +77,11 @@ char	*get_cmd_path(char *cmd, char **envp)
 	if (!paths)
 		return (0);
 	i = 0;
-	while (paths[i])
-	{
-		tmp = paths[i];
-		paths[i] = ft_strjoin(paths[i], "/");
-		free(tmp);
-		i++;
-	}
+	paths = slash_path(i, paths);
 	i = 0;
-	while (paths[i])
-	{
-		cmd_path = ft_strjoin(paths[i], cmd);
-		if (access(cmd_path, F_OK | X_OK) == 0)
-			return (cmd_path);
-		free (cmd_path);
-		i++;
-	}
+	cmd_path = wright_path(i, paths, cmd);
+	if (cmd_path != NULL)
+		return(cmd_path);
 	perror(envp_path);
 	free (envp_path);
 	return (0);
