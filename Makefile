@@ -6,7 +6,7 @@
 #    By: ksura <ksura@student.42wolfsburg.de>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/06/07 09:24:12 by ksura             #+#    #+#              #
-#    Updated: 2022/07/24 11:03:14 by ksura            ###   ########.fr        #
+#    Updated: 2022/07/24 15:41:25 by ksura            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,7 +22,7 @@ LIBFT = $(LIBFT_DIRECTORY)/libft.a
 LIBFT_DIRECTORY = ./libft
 FT_LNK	= ./libft/libft.a
 
-SRC := main.c test.c
+SRC := main.c test.c file_opening.c
 
 GREEN = \033[0;32m
 RED = \033[0;31m

@@ -6,13 +6,11 @@
 /*   By: ksura <ksura@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/23 13:53:36 by ksura             #+#    #+#             */
-/*   Updated: 2022/07/24 14:59:47 by ksura            ###   ########.fr       */
+/*   Updated: 2022/07/24 15:41:35 by ksura            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../header/pipex.h"
-
-int	open_file(char *filename, int rw, char **envp);
 
 int	main(int argc, char **argv, char **envp)
 {
@@ -81,46 +79,3 @@ int	main(int argc, char **argv, char **envp)
 // 	options = ft_split(arg, " ");
 // }
 
-int	open_file(char *filename, int rw , char **envp)
-{
-	int fd;
-	char	*touching[3] = {"touch", filename, NULL};
-	// char	*modding[3] = {"chmod", "777", NULL};
-	char	*cmd_path;
-	pid_t	pid;
-
-	cmd_path = get_cmd_path("touch", envp);
-	// *options = {"touch", filename, NULL};
-	if (rw == 0)
-	{
-		fd = open(filename, O_RDONLY);
-		if (fd == -1)
-		{
-			ft_printf("zsh: %s: %s\n", strerror(errno), filename);
-			exit (0);
-		}
-	}
-	else
-	{
-		if (access (filename, F_OK)== 0)
-		{
-			if (access (filename, W_OK)!= 0)
-			{
-				ft_printf("zsh: %s: %s\n", strerror(errno), filename);
-				exit (0);
-			}
-		}
-		else
-		{
-			pid = fork();
-			if (pid == -1)
-				return (1);
-			if (pid == 0)
-				execve(cmd_path, touching, envp);
-			waitpid(pid, NULL, WUNTRACED);
-		}
-		fd = open(filename, O_WRONLY);
-		;
-	}
-	return (fd);
-}
