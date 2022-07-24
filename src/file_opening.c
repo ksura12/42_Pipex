@@ -6,22 +6,16 @@
 /*   By: ksura <ksura@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/23 13:53:36 by ksura             #+#    #+#             */
-/*   Updated: 2022/07/24 16:28:22 by ksura            ###   ########.fr       */
+/*   Updated: 2022/07/24 16:35:13 by ksura            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../header/pipex.h"
 
-static void	file_outputting(char *filename, char **envp)
+static void	file_outputting(char *filename, char **envp, char *cmd_p, char **t)
 {
-	char	*touching[3];
-	char	*cmd_path;
 	pid_t	pid;
 
-	touching[0] = "touch";
-	touching[1] = filename;
-	touching[2] = NULL;
-	cmd_path = get_cmd_path("touch", envp);
 	if (access (filename, F_OK) == 0)
 	{
 		if (access (filename, W_OK) != 0)
@@ -39,7 +33,7 @@ static void	file_outputting(char *filename, char **envp)
 			exit(0);
 		}
 		if (pid == 0)
-			execve(cmd_path, touching, envp);
+			execve(cmd_p, t, envp);
 		waitpid(pid, NULL, WUNTRACED);
 	}
 }
@@ -47,7 +41,13 @@ static void	file_outputting(char *filename, char **envp)
 int	open_file(char *filename, int rw, char **envp)
 {
 	int		fd;
+	char	*touching[3];
+	char	*cmd_path;
 
+	touching[0] = "touch";
+	touching[1] = filename;
+	touching[2] = NULL;
+	cmd_path = get_cmd_path("touch", envp);
 	if (rw == 0)
 	{
 		fd = open(filename, O_RDONLY);
@@ -59,7 +59,7 @@ int	open_file(char *filename, int rw, char **envp)
 	}
 	else
 	{
-		file_outputting(filename, envp);
+		file_outputting(filename, envp, cmd_path, touching);
 		fd = open(filename, O_WRONLY);
 	}
 	return (fd);
