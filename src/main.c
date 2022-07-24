@@ -6,13 +6,13 @@
 /*   By: ksura <ksura@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/23 13:53:36 by ksura             #+#    #+#             */
-/*   Updated: 2022/07/24 17:44:32 by ksura            ###   ########.fr       */
+/*   Updated: 2022/07/24 17:46:34 by ksura            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../header/pipex.h"
 
-int child2_parent(char **argv, t_pipex *pipex)
+int	child2_parent(char **argv, t_pipex *pipex)
 {
 	if (pipex->pid[1] == -1)
 		return (1);

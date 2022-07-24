@@ -6,7 +6,7 @@
 /*   By: ksura <ksura@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/24 17:09:35 by ksura             #+#    #+#             */
-/*   Updated: 2022/07/24 17:32:21 by ksura            ###   ########.fr       */
+/*   Updated: 2022/07/24 17:52:31 by ksura            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void	child1(char **argv, t_pipex *pipex)
 	exit(-1);
 }
 
-void	child2(char **argv,t_pipex 	*pipex)
+void	child2(char **argv, t_pipex *pipex)
 {
 	char	*cmd_path;
 	char	**options;
