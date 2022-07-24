@@ -6,7 +6,7 @@
 /*   By: ksura <ksura@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/23 13:53:36 by ksura             #+#    #+#             */
-/*   Updated: 2022/07/24 14:18:18 by ksura            ###   ########.fr       */
+/*   Updated: 2022/07/24 14:59:47 by ksura            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,8 +68,8 @@ int	main(int argc, char **argv, char **envp)
 		close(fd_file[1]);
 		close(ends[0]);
 		close(ends[1]);
-		waitpid(pid, NULL, 0);// WUNTRACED
-		waitpid(pid2, NULL, 0);
+		waitpid(pid, NULL, WUNTRACED);// WUNTRACED
+		waitpid(pid2, NULL, WUNTRACED);
 		return (0);
 	}
 		
@@ -84,8 +84,10 @@ int	main(int argc, char **argv, char **envp)
 int	open_file(char *filename, int rw , char **envp)
 {
 	int fd;
-	char	*options[3] = {"touch", filename, NULL};
+	char	*touching[3] = {"touch", filename, NULL};
+	// char	*modding[3] = {"chmod", "777", NULL};
 	char	*cmd_path;
+	pid_t	pid;
 
 	cmd_path = get_cmd_path("touch", envp);
 	// *options = {"touch", filename, NULL};
@@ -100,16 +102,25 @@ int	open_file(char *filename, int rw , char **envp)
 	}
 	else
 	{
-		// if (access (filename, F_OK)== 0)
-		
-		fd = open(filename, O_WRONLY);
-		if (fd == -1)
+		if (access (filename, F_OK)== 0)
 		{
-			execve(cmd_path, options, envp);
-			perror("zsh");
-			exit (0);
+			if (access (filename, W_OK)!= 0)
+			{
+				ft_printf("zsh: %s: %s\n", strerror(errno), filename);
+				exit (0);
+			}
 		}
+		else
+		{
+			pid = fork();
+			if (pid == -1)
+				return (1);
+			if (pid == 0)
+				execve(cmd_path, touching, envp);
+			waitpid(pid, NULL, WUNTRACED);
+		}
+		fd = open(filename, O_WRONLY);
+		;
 	}
-	
 	return (fd);
 }
