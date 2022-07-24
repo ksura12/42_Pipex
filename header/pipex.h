@@ -6,7 +6,7 @@
 /*   By: ksura <ksura@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/22 12:07:45 by ksura             #+#    #+#             */
-/*   Updated: 2022/07/24 17:33:06 by ksura            ###   ########.fr       */
+/*   Updated: 2022/07/24 18:22:34 by ksura            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,23 +29,27 @@ typedef struct s_pipex
 }	t_pipex;
 
 /**
-*@brief get the right path for execution of shell commants out of the envp
+*@brief get the right path for execution of shell
+*commants out of the envp
 *
 *@param *cmd: char * to which command to look for
-*@param **envp; environmentpointer of the mainfct to get systeminformation about path
+*@param **envp; environmentpointer of the mainfct to get 
+*systeminformation about path
 *@return char * of the path to the given shell command
 */
-char 	*get_cmd_path(char *cmd, char **envp);
+char	*get_cmd_path(char *cmd, char **envp);
 
 /**
 *@brief opens/creates given files, checks for access rights
 *
 *@param *filename: char pointer to the file to open/create
-*@param rw: int to declare if its input file (rw = 0) or output file (rw = 1)
-*@param **envp; environmentpointer of the mainfct for execution of "touch" and "chmod"
+*@param rw: int to declare if its input file (rw = 0) or 
+*output file (rw = 1)
+*@param **envp; environmentpointer of the mainfct for 
+*execution of "touch" and "chmod"
 *@return filedescritor fd of the opened file
 */
-int	open_file(char *filename, int rw, char **envp);
+int		open_file(char *filename, int rw, char **envp);
 
 /**
 *@brief handles the function execution and pipe input for child1 
@@ -55,7 +59,7 @@ int	open_file(char *filename, int rw, char **envp);
 *@param *ends: ends of the opened pipe (0-read, 1-write)
 *@return f-
 */
-void	child1(char **argv, t_pipex 	*pipex);
+void	child1(char **argv, t_pipex *pipex);
 
 /**
 *@brief handles the function execution and pipe input for child1 
@@ -65,7 +69,6 @@ void	child1(char **argv, t_pipex 	*pipex);
 *@param *ends: ends of the opened pipe (0-read, 1-write)
 *@return f-
 */
-void	child2(char **argv, t_pipex 	*pipex);
-
+void	child2(char **argv, t_pipex *pipex);
 
 #endif
