@@ -6,18 +6,30 @@
 /*   By: ksura <ksura@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/23 13:53:36 by ksura             #+#    #+#             */
-/*   Updated: 2022/07/24 17:10:17 by ksura            ###   ########.fr       */
+/*   Updated: 2022/07/24 17:44:32 by ksura            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../header/pipex.h"
 
+int child2_parent(char **argv, t_pipex *pipex)
+{
+	if (pipex->pid[1] == -1)
+		return (1);
+	if (pipex->pid[1] == 0)
+		child2(argv, pipex);
+	close(pipex->fd_file[0]);
+	close(pipex->fd_file[1]);
+	close(pipex->ends[0]);
+	close(pipex->ends[1]);
+	waitpid(pipex->pid[0], NULL, WUNTRACED);
+	waitpid(pipex->pid[1], NULL, WUNTRACED);
+	return (0);
+}
+
 int	main(int argc, char **argv, char **envp)
 {
-	pid_t	pid;
-	pid_t	pid2;
-	int		ends[2];
-	int		fd_file[2];
+	t_pipex	*pipex;
 
 	if (argc != 5)
 	{
@@ -26,24 +38,19 @@ int	main(int argc, char **argv, char **envp)
 	}
 	else
 	{
-		if (pipe(ends) == -1)
+		pipex = (t_pipex *)calloc(1, sizeof(t_pipex));
+		pipex->envp = envp;
+		if (pipe(pipex->ends) == -1)
 			return (1);
-		pid = fork();
-		if (pid == -1)
+		pipex->pid[0] = fork();
+		if (pipex->pid[0] == -1)
 			return (1);
-		if (pid == 0)
-			child1(argv, envp, ends);
-		pid2 = fork();
-		if (pid2 == -1)
+		if (pipex->pid[0] == 0)
+			child1(argv, pipex);
+		pipex->pid[1] = fork();
+		if (child2_parent(argv, pipex) == 1)
 			return (1);
-		if (pid2 == 0)
-			child2(argv, envp, ends);
-		close(fd_file[0]);
-		close(fd_file[1]);
-		close(ends[0]);
-		close(ends[1]);
-		waitpid(pid, NULL, WUNTRACED);
-		waitpid(pid2, NULL, WUNTRACED);
+		free (pipex);
 		return (0);
 	}
 }

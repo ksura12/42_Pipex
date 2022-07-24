@@ -6,7 +6,7 @@
 /*   By: ksura <ksura@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/22 12:07:45 by ksura             #+#    #+#             */
-/*   Updated: 2022/07/24 17:13:15 by ksura            ###   ########.fr       */
+/*   Updated: 2022/07/24 17:33:06 by ksura            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,14 @@
 # include <fcntl.h>
 # include <string.h>
 # include <errno.h>
+
+typedef struct s_pipex
+{
+	int		fd_file[2];
+	int		ends[2];
+	int		pid[2];
+	char	**envp;
+}	t_pipex;
 
 /**
 *@brief get the right path for execution of shell commants out of the envp
@@ -47,7 +55,7 @@ int	open_file(char *filename, int rw, char **envp);
 *@param *ends: ends of the opened pipe (0-read, 1-write)
 *@return f-
 */
-void	child1(char **argv, char **envp, int *ends);
+void	child1(char **argv, t_pipex 	*pipex);
 
 /**
 *@brief handles the function execution and pipe input for child1 
@@ -57,5 +65,7 @@ void	child1(char **argv, char **envp, int *ends);
 *@param *ends: ends of the opened pipe (0-read, 1-write)
 *@return f-
 */
-void	child2(char **argv, char **envp, int *ends);
+void	child2(char **argv, t_pipex 	*pipex);
+
+
 #endif
