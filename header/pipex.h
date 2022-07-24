@@ -6,7 +6,7 @@
 /*   By: ksura <ksura@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/22 12:07:45 by ksura             #+#    #+#             */
-/*   Updated: 2022/07/24 15:51:17 by ksura            ###   ########.fr       */
+/*   Updated: 2022/07/24 17:13:15 by ksura            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,4 +39,23 @@ char 	*get_cmd_path(char *cmd, char **envp);
 */
 int	open_file(char *filename, int rw, char **envp);
 
+/**
+*@brief handles the function execution and pipe input for child1 
+*
+*@param **argv: argv pointer of main
+*@param **envp: environmentpointer of the mainfct
+*@param *ends: ends of the opened pipe (0-read, 1-write)
+*@return f-
+*/
+void	child1(char **argv, char **envp, int *ends);
+
+/**
+*@brief handles the function execution and pipe input for child1 
+*
+*@param **argv: argv pointer of main
+*@param **envp: environmentpointer of the mainfct
+*@param *ends: ends of the opened pipe (0-read, 1-write)
+*@return f-
+*/
+void	child2(char **argv, char **envp, int *ends);
 #endif
