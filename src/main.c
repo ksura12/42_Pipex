@@ -6,13 +6,13 @@
 /*   By: ksura <ksura@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/23 13:53:36 by ksura             #+#    #+#             */
-/*   Updated: 2022/07/24 12:58:09 by ksura            ###   ########.fr       */
+/*   Updated: 2022/07/24 14:18:18 by ksura            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../header/pipex.h"
 
-int	open_file(char *filename, int rw);
+int	open_file(char *filename, int rw, char **envp);
 
 int	main(int argc, char **argv, char **envp)
 {
@@ -42,7 +42,7 @@ int	main(int argc, char **argv, char **envp)
 		{
 			options = ft_split(argv[2], ' ');
 			cmd_path = get_cmd_path(options[0], envp);
-			fd_file[0] = open_file(argv[1], 0);
+			fd_file[0] = open_file(argv[1], 0, envp);
 			dup2(fd_file[0], STDIN_FILENO);
 			dup2(ends[1], STDOUT_FILENO);
 			close(ends[0]);
@@ -57,9 +57,9 @@ int	main(int argc, char **argv, char **envp)
 		{
 			options = ft_split(argv[3], ' ');
 			cmd_path = get_cmd_path(options[0], envp);
-			fd_file[1] = open_file(argv[4], 1);
+			fd_file[1] = open_file(argv[4], 1, envp);
 			dup2(ends[0], STDIN_FILENO);
-			// dup2()
+			dup2(fd_file[1], STDOUT_FILENO);
 			close(ends[0]);
 			close(ends[1]);
 			execve(cmd_path, options, envp);
@@ -81,18 +81,35 @@ int	main(int argc, char **argv, char **envp)
 // 	options = ft_split(arg, " ");
 // }
 
-int	open_file(char *filename, int rw)
+int	open_file(char *filename, int rw , char **envp)
 {
 	int fd;
+	char	*options[3] = {"touch", filename, NULL};
+	char	*cmd_path;
 
+	cmd_path = get_cmd_path("touch", envp);
+	// *options = {"touch", filename, NULL};
 	if (rw == 0)
+	{
 		fd = open(filename, O_RDONLY);
-	else
-		fd = open(filename, O_WRONLY);
-	if (fd == -1)
+		if (fd == -1)
 		{
-			perror("open_file failed");
+			ft_printf("zsh: %s: %s\n", strerror(errno), filename);
 			exit (0);
 		}
+	}
+	else
+	{
+		// if (access (filename, F_OK)== 0)
+		
+		fd = open(filename, O_WRONLY);
+		if (fd == -1)
+		{
+			execve(cmd_path, options, envp);
+			perror("zsh");
+			exit (0);
+		}
+	}
+	
 	return (fd);
 }
