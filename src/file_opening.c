@@ -6,11 +6,20 @@
 /*   By: ksura <ksura@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/23 13:53:36 by ksura             #+#    #+#             */
-/*   Updated: 2022/07/24 20:07:23 by ksura            ###   ########.fr       */
+/*   Updated: 2022/07/25 09:55:40 by ksura            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../header/pipex.h"
+
+static void print_err(char *filename)
+{
+	ft_putstr_fd("zsh: ", 2);
+	ft_putstr_fd(strerror(errno), 2);
+	ft_putstr_fd(": ", 2);
+	ft_putstr_fd(filename, 2);
+	ft_putstr_fd("\n", 2);
+}
 
 static void	file_outputting(char *filename, char **envp, char *cmd_p, char **t)
 {
@@ -20,12 +29,7 @@ static void	file_outputting(char *filename, char **envp, char *cmd_p, char **t)
 	{
 		if (access (filename, W_OK) != 0)
 		{
-			ft_putstr_fd("zsh: ", 2);
-			ft_putstr_fd(strerror(errno), 2);
-			ft_putstr_fd(": ", 2);
-			ft_putstr_fd(filename, 2);
-			ft_putstr_fd("\n", 2);
-			// ft_printf("zsh: %s: %s\n", strerror(errno), filename);
+			print_err(filename);
 			exit (0);
 		}
 	}
@@ -34,12 +38,7 @@ static void	file_outputting(char *filename, char **envp, char *cmd_p, char **t)
 		pid = fork();
 		if (pid == -1)
 		{
-			ft_putstr_fd("zsh: ", 2);
-			ft_putstr_fd(strerror(errno), 2);
-			ft_putstr_fd(": ", 2);
-			ft_putstr_fd(filename, 2);
-			ft_putstr_fd("\n", 2);
-			// ft_printf("zsh: %s: %s\n", strerror(errno), filename);
+			print_err(filename);
 			exit(0);
 		}
 		if (pid == 0)
@@ -63,12 +62,7 @@ int	open_file(char *filename, int rw, char **envp)
 		fd = open(filename, O_RDONLY);
 		if (fd == -1)
 		{
-			ft_putstr_fd("zsh: ", 2);
-			ft_putstr_fd(strerror(errno), 2);
-			ft_putstr_fd(": ", 2);
-			ft_putstr_fd(filename, 2);
-			ft_putstr_fd("\n", 2);
-			// ft_printf("zsh: %s: %s\n", strerror(errno), filename);
+			print_err(filename);
 			exit (0);
 		}
 	}
