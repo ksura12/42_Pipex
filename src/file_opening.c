@@ -6,13 +6,13 @@
 /*   By: ksura <ksura@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/23 13:53:36 by ksura             #+#    #+#             */
-/*   Updated: 2022/07/25 09:55:40 by ksura            ###   ########.fr       */
+/*   Updated: 2022/07/25 09:56:47 by ksura            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../header/pipex.h"
 
-static void print_err(char *filename)
+static void	print_err(char *filename)
 {
 	ft_putstr_fd("zsh: ", 2);
 	ft_putstr_fd(strerror(errno), 2);
