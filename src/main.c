@@ -6,7 +6,7 @@
 /*   By: ksura <ksura@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/23 13:53:36 by ksura             #+#    #+#             */
-/*   Updated: 2022/07/24 17:46:34 by ksura            ###   ########.fr       */
+/*   Updated: 2022/07/25 08:57:01 by ksura            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ int	main(int argc, char **argv, char **envp)
 
 	if (argc != 5)
 	{
-		ft_printf("Wrong amount of input arguments\n");
+		ft_putstr_fd("Wrong amount of input arguments\n", 2);
 		return (0);
 	}
 	else
