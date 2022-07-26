@@ -6,11 +6,12 @@
 #    By: ksura <ksura@student.42wolfsburg.de>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/06/07 09:24:12 by ksura             #+#    #+#              #
-#    Updated: 2022/07/24 18:00:52 by ksura            ###   ########.fr        #
+#    Updated: 2022/07/26 09:17:38 by ksura            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME := pipex
+# BON := bon
 CC = gcc
 CFLAGS := -Wall -Werror -Wextra
 LIBRARIES = $(FT_LNK) 
@@ -28,6 +29,7 @@ GREEN = \033[0;32m
 RED = \033[0;31m
 
 OBJS = ${SRC:.c=.o}
+
 OBJECTS_PREF := $(addprefix $(OBJDIR), $(OBJS))
 
 .PHONY: all clean fclean re
@@ -43,7 +45,11 @@ $(LIBFT):
 
 $(OBJECTS_PREF): build/%.o : src/%.c
 	@mkdir -p $(OBJDIR)
-	@$(CC) $(CFLAGS) $(OBLI) -c $< -o $@ -I$(HEADER) $(INCLUDES)
+	@$(CC) $(CFLAGS) -c $< -o $@ -I$(HEADER) $(INCLUDES)
+	
+$(OBJECTS_PREF_BO): $(OBJDIR_BO)%.o : bonus/%.c
+	@mkdir -p $(OBJDIR_BO)
+	@$(CC) $(CFLAGS) -c $< -o $@ -I$(HEADER) $(INCLUDES)
 
 clean:
 	@cd ./$(LIBFT_DIRECTORY) && make clean
